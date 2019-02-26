@@ -21,7 +21,7 @@ var chartGroup = svg.append("g")
 // Import data from an external CSV file
 d3.csv("assets/data/data.csv").then(function(stateData) {
 
-  console.log(stateData);
+  // console.log(stateData);
   
   // Parse the data
   stateData.forEach(function(data) {
@@ -105,13 +105,6 @@ d3.csv("assets/data/data.csv").then(function(stateData) {
   	.attr("cx", d => xLinearScale(d.income))
   	.attr("cy", d => yLinearScale1(d.obesity))
   
-  // Trying to add text to the circles CURRENTLY DOES NOT WORK	
-  chartGroup.append("text")
-  	.text(function(d) {
-  		d => d.abbr;
-  	});
-  
-  	
   // Initialize the tooltip
   var toolTip = d3.tip()
   	.attr("class", "d3-tip")
@@ -145,6 +138,19 @@ d3.csv("assets/data/data.csv").then(function(stateData) {
      .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`)
      .attr("class", "aText")
      .text("Obesity vs Income by State");
+	 
+ // Trying to add text to the circles CURRENTLY DOES NOT WORK	
+ chartGroup.selectAll("text")
+ 	.data(stateData)
+ 	.enter()
+ 	.append("text")
+ 	.attr("x", d => xLinearScale(d.income))
+ 	.attr("y", d => yLinearScale1(d.obesity))
+ 	.style("fill", "black")
+ 	.text(d => d.abbr);
+   
+ 	
+ 
 
   
 });
